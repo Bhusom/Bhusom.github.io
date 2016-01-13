@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="css/styles.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+		<title>
+			Mortgage Manager
+		</title>
+	</head>
+	
+	<body>
+	<div class="container">
+		<fieldset>
+		
+			<legend>
+				Mortgage Scheduler
+			</legend>
+	
+			<form id="inputForm" role="form">
+			
+				<div class="form-group">	
+					<label for="year">Mortgage Length: </label>
+					<!-- radio buttons made a bit larger than usual with the input-lg class -->
+					<div class="radio input-lg">
+						<label><input type="radio" id= "fifOp" name="year" value= 15>15</input></label>
+						<label><input type="radio" id= "tweOp" name="year" value= 20>20</input></label>
+						<label><input type="radio" id= "thiOp" name="year" value= 30 checked= "checked">30</input></label>
+					</div>
+				</div>
+				
+				
+				<div class="form-group"> 
+					<label for="interest" >Enter your annual interest rate %: </label>
+						<input type="text" class="form-control" id="interest" placeholder="e.g. 15"/> 
+					</div>	 
+					
+					
+					
+				<div class="form-group"> 
+					<label for="principle">Enter your loan principal: </label>
+					<input type="text" name="principal" class="form-control" id="principal" placeholder="e.g. 100000"/> 						
+				</div>
+				
+				<div class="form-group">
+						<!-- all bootstrap buttons should have class btn and a button type -->
+						<button type="button" id="nextButton" class="btn btn-default">
+							Next <span class="glyphicon glyphicon-arrow-right"></span> 
+						</button>
+				
+				
+			</form>	
+			
+			<div id="outputDiv"> 
+			</div> 
+		
+		</fieldset>
+	</div>	
+	
+	<script type="text/javascript">
+	//var mir - monthly interest rate
+	
+	 var years = 0; //input
+	 
+	 if(document.querySelector("#fifOp").checked === true)
+	 {
+		years = 15;
+	 }
+
+	 if(document.querySelector("#tweOp").checked === true)
+	 {
+		years = 20;
+	 }
+	
+	 if(document.querySelector("#thiOp").checked === true)
+	 {
+		years = 30;
+	 }
+	 
+	 var principal = Number(document.querySelector("#principal").value);
+	 var annualInterest = Number(document.querySelector("#interest").value) / 100;
+	 
+	 var mir = annualInterest/12.0;
+	 var numMonths = years * 12;
+	 var totInter = 0;
+	 
+	 var monthPayment = (mir/(1-(Math.pow((1 + mir),(-numMonths)))))* principal;
+	 
+	 for(var i = 1; i <= (years * 12); i++){
+		var interInMonth = mir * principal;
+		var princInMonth = monthPayment - interInMonth;
+		totInter = totInter + interInMonth;
+		principal = principal - princInMonth;
+		numMonths = numMonths - 1;
+	}
+	 
+	 //form grabbing
+	 var nextButton = document.querySelector("#nextButton");
+	 nextButton.addEventListener("click", display, false);
+	 
+	 function display(event){			
+		//store a big string of results
+		var output = "<hr>";
+
+		output += "I think it works";
+	
+		//access the inner html of the div and place the result string in there
+		document.querySelector("#outputDiv").innerHTML = output;
+	 }
+	 
+	</script>
+	
+	
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		
+	
+	</body>
+	
+
+  
+</html>
