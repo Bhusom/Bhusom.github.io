@@ -77,6 +77,9 @@
 	<script type="text/javascript">
 	//var mir - monthly interest rate
 	
+	var nextButton = document.querySelector("#nextButton");
+	 nextButton.addEventListener("click", display, false);
+	
 	 var years = 0; //input
 	 
 	 if(document.querySelector("#fifOp").checked === true)
@@ -93,15 +96,19 @@
 	 {
 		years = 30;
 	 }
+	  
 	 
-	 var principal = Number(document.querySelector("#principal").value);
-	 var annualInterest = Number(document.querySelector("#interest").value) / 100;
+	 var principal = Number(document.querySelector("#principal").value);  //input
+	 var annualInterest = Number(document.querySelector("#interest").value) / 100; //input
 	 
 	 var mir = annualInterest/12.0;
 	 var numMonths = years * 12;
 	 var totInter = 0;
 	 
 	 var monthPayment = (mir/(1-(Math.pow((1 + mir),(-numMonths)))))* principal;
+	 
+	 var totalSpent = monthPayment * numMonths;
+	 var ratio = totalSpent / principal;
 	 
 	 for(var i = 1; i <= (years * 12); i++){
 		var interInMonth = mir * principal;
@@ -111,19 +118,20 @@
 		numMonths = numMonths - 1;
 	}
 	 
-	 //form grabbing
-	 var nextButton = document.querySelector("#nextButton");
-	 nextButton.addEventListener("click", display, false);
-	 
 	 function display(event){			
-		//store a big string of results
-		var output = "<hr>";
 
-		output += "I think it works";
+		var output = "<hr/>";
+
+		output += "<h3> Summarry: </h3><br/>";
+		output += "<p>Loan Ammount: $" + principal + "</p><br/>";
+		output += "<p>Total Ammount paid: $" + totalSpent + "</p><br/>";
+		output += "<p>Monthly Payment: $" + monthPayment + "</p><br/>";
+		output += "<p>Interest Paid: $" + totInter + "</p><br/>";
+		output += "<p>Ratio of Borrowed to paid: " + ratio + ":1</p><br/>"
 	
-		//access the inner html of the div and place the result string in there
 		document.querySelector("#outputDiv").innerHTML = output;
 	 }
+
 	 
 	</script>
 	
