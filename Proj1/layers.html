@@ -88,30 +88,38 @@
 				var myFirebaseRef = new Firebase("https://mylogo.firebaseio.com");
 				
 					if(stampName === "Flower"){
-				
+						
+						output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='http://pngimg.com/upload/camomile_PNG666.png' />";
+						
 						myFirebaseRef.child("stamp1").once("value", function(snapshot) {
-							output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
+							//output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
 							console.log(snapshot.val());
 						});
 					};
 					if(stampName === "Beard"){
-				
+					
+						output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='http://pngimg.com/upload/beard_PNG6248.png' />";
+						
 						myFirebaseRef.child("stamp2").once("value", function(snapshot) {
-							output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
-							console.log(snapshot.val());							
-							});
+							//output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
+							console.log(snapshot.val());	
+						});
 					};
 					if(stampName === "Mustache"){
-				
+					
+						output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='http://pngimg.com/upload/beard_PNG6265.png' />";
+						
 						myFirebaseRef.child("stamp3").once("value", function(snapshot) {
-							output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
+							//output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
 							console.log(snapshot.val());							
 						});
 					};
 					if(stampName === "Top-Hat"){
 				
+						output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='http://pngimg.com/upload/hat_PNG5700.png' />";
+						
 						myFirebaseRef.child("stamp4").once("value", function(snapshot) {
-							output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />"; 
+							//output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />"; 
 							console.log(snapshot.val());
 						});
 					}; 	
