@@ -1,0 +1,49 @@
+#logo{
+	width: 20%;
+	height: 20%;
+}
+#back{
+	width: 100%;
+}
+#front{
+	width: 100%;
+}
+#backGroup{
+	width: 49%;
+}
+#frontGroup{
+	width: 45%;
+	padding-left: 1%;
+	padding-top: 2%;
+	
+}
+#posGroup{
+	width: 100%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
+#inner1{
+	width: 49%;
+}
+#inner2{
+	width: 49%;
+}
+#nextButton{
+	background-color: #FF001A;
+}
+#outputDiv{
+	border: 2px solid black;
+}
+
+#image1{
+	position: relative;
+	z-index: -1;
+
+}
+
+.dragme{
+	position:relative;
+	cursor: move;
+}
+
+

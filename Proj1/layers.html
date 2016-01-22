@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>myLogo</title>
+ 
+  
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+	
+	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+	
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<img id="logo" src="Images/dancingWText.png"/>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<form class="form-inline" id="inputForm" role="form">
+	
+			<div class="form-group" id = "backGroup"> 
+				<label for="back" >Back Photo URL: </label>
+				<input type="text" class="form-control" id="back" placeholder="http://example.com/pageExample/pictureExample.jpg"/> 
+			</div>
+
+			<div class="form-group" id = "frontGroup">	
+				<label for="stampDDL">Select stamp: </label> 
+					<select class="form-control" id="stampDDL"> 
+						<option value="fl">Flower</option> 
+						<option value="br">Beard</option> 
+						<option value="mu">Mustache</option>
+						<option value="to">Top-Hat</option>
+					</select> 
+			</div>
+
+			<div id = "posGroup">
+				<div class="form-group" id= "inner2">
+					<button type="button" id="nextButton" class="btn btn-default">
+						<span class="glyphicon glyphicon-ok-circle"></span>
+						Layer Photos 
+					</button>				
+				</div>
+			</div>
+			
+		</form>
+		
+		<div id="outputDiv">
+		
+		</div>
+		
+	</div>
+	
+
+
+	<script type="text/javascript">
+		
+	
+		var nextButton = document.querySelector("#nextButton");
+		nextButton.addEventListener("click", display, false);
+		
+		function display(event){
+			
+			var output = "";
+			
+			output+= "<img id='image1' width='500px' height='500px' class='img-responsive' src='" + document.querySelector("#back").value + "'/>" + "&#13";
+
+			//grab the ddl object
+				var stampDDL = document.querySelector("#stampDDL");
+				//get the index of the selected item- 0 for the first, 1 for the second, etc
+				var stampIndex = stampDDL.selectedIndex;
+				//go to the ddl options array and use the index to grab the selected item's 
+				//text and hidden value
+				var stampName = stampDDL.options[stampIndex].text;
+				var stampCode = stampDDL.options[stampIndex].value;
+				
+				$(document).ready(function() {
+				//get a reference to our firebase using the unique url
+				var myFirebaseRef = new Firebase("https://mylogo.firebaseio.com");
+				
+					if(stampName === "Flower"){
+				
+						myFirebaseRef.child("stamp1").once("value", function(snapshot) {
+							output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
+							console.log(snapshot.val());
+						});
+					};
+					if(stampName === "Beard"){
+				
+						myFirebaseRef.child("stamp2").once("value", function(snapshot) {
+							output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
+							console.log(snapshot.val());							
+							});
+					};
+					if(stampName === "Mustache"){
+				
+						myFirebaseRef.child("stamp3").once("value", function(snapshot) {
+							output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />";
+							console.log(snapshot.val());							
+						});
+					};
+					if(stampName === "Top-Hat"){
+				
+						myFirebaseRef.child("stamp4").once("value", function(snapshot) {
+							output += "<img id='image2' class = 'dragme'  width='100px' height='100px'  src='" + snapshot.val() + "' />"; 
+							console.log(snapshot.val());
+						});
+					}; 	
+				});
+			
+			//access the inner html of the div and place the result string in there
+			document.querySelector("#outputDiv").innerHTML = output;
+		}
+		
+		//dragable
+		function startDrag(e) {
+        // determine event object
+        if (!e) {
+			var e = window.event;
+        }
+
+            // IE uses srcElement, others use target
+            var targ = e.target ? e.target : e.srcElement;
+
+            if (targ.className != 'dragme') {return};
+            // calculate event X, Y coordinates
+                offsetX = e.clientX;
+                offsetY = e.clientY;
+
+            // assign default values for top and left properties
+            if(!targ.style.left) { targ.style.left='0px'};
+            if (!targ.style.top) { targ.style.top='0px'};
+
+            // calculate integer values for top and left 
+            // properties
+            coordX = parseInt(targ.style.left);
+            coordY = parseInt(targ.style.top);
+            drag = true;
+
+            // move div element
+                document.onmousemove=dragDiv;
+				
+			e.preventDefault();	
+        }
+        function dragDiv(e) {
+            if (!drag) {return};
+            if (!e) { var e= window.event};
+            var targ=e.target?e.target:e.srcElement;
+            // move div element
+            targ.style.left=coordX+e.clientX-offsetX+'px';
+            targ.style.top=coordY+e.clientY-offsetY+'px';
+            return false;
+        }
+        function stopDrag() {
+            drag=false;
+        }
+        window.onload = function() {
+            document.onmousedown = startDrag;
+            document.onmouseup = stopDrag;
+        }
+
+		
+
+	</script>
+
+ 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" 
+		crossorigin="anonymous">
+	</script>
+	
+
+	
+	
+</body>
+</html>
