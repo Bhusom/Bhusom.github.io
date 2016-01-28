@@ -41,6 +41,11 @@
 
 }
 
+#canvas {
+    border:1px solid red;
+}
+
+
 .dragme{
 	position:relative;
 	cursor: move;
